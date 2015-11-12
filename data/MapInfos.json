@@ -1,6 +1,6 @@
 [
 null,
-{"id":1,"expanded":false,"name":"MAP001","order":1,"parentId":0,"scrollX":489,"scrollY":407},
+{"id":1,"expanded":false,"name":"MAP001","order":1,"parentId":0,"scrollX":489,"scrollY":406},
 {"id":2,"expanded":true,"name":"Fortress","order":2,"parentId":0,"scrollX":1561,"scrollY":1327},
 {"id":3,"expanded":true,"name":"Demon Castle 1F","order":3,"parentId":2,"scrollX":1183,"scrollY":2002},
 {"id":4,"expanded":false,"name":"MAP004","order":9,"parentId":0,"scrollX":499,"scrollY":406},

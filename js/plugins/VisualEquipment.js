@@ -37,6 +37,14 @@ One Sprite Per Layer - By default, you can have an infinite amount of parts per 
  --------------------------------------------------------------------------------
  Notetags
  ================================================================================
+ 
+ [VE Actor]
+
+Using this tag will make the actor's sprites(and any instance of them) invisible. This is so you can create an actor entirely from parts.
+
+
+
+VE Image image,layer,hue,saturation,value
   VE Image: image,layer,hue,saturation,value
 
 
@@ -45,12 +53,7 @@ First, ensure that you have a folder named parts, and inside that folder are thr
 
 When you use this tag, the plugin will search the folder relevant to the situation for the sprite named "image", For example, if the actor's face pops up, it'll look in the "face" folder.
 
-
-note: using this tag in the actor's notes will make their default sprites invisible. If, for example, you set an actor to use a hair part, but that's the only image you used, the actor will become nothing but floating hair.
-
-
 The layer tells the plugin what order the part should be created in. It goes lowest to highest, and by default is 0.
-
 
 hue is the color of the part.
 
@@ -60,8 +63,6 @@ value is how bright the part is. 0 is the normal value, -255 is black, and 255 i
 
 
 note: everything but image can be set to an eval formula. Keep in mind though that right now it only sets these values the moment the parts are created.
-
-
 
  
  --------------------------------------------------------------------------------
@@ -105,7 +106,7 @@ Sprite.prototype.createCharacter = function(actor){
 	
 var act = $dataActors[actor.actorId()];
 Rexal.VE.processPartNoteTag(act);
-
+this._visual = act._visual;
 if(act.sprites)sprites = this.combineParts(sprites,act.sprites); else return;
 
 var length = actor.equips().length;
@@ -147,7 +148,6 @@ if(n>layer) layer = n;
 };
 
 Sprite.prototype.combineParts = function(array,array2){
-	this._isvisual = true;
 var ar = array;
 if(!ar)ar = [];
 	for(var i = 0; i<array2.length; i++)
@@ -163,7 +163,7 @@ var min = this.findLowestPart(array);
 var max = this.findHighestPart(array)+1;
 var newArray = [];
 
-sprite.bitmap.clear();
+if(this._visual)sprite.bitmap.clear();
 
 for(var i = min; i<max; i++)
 {
@@ -234,7 +234,7 @@ Sprite_Actor.prototype.createCharacter = function() {
 };
 
 Sprite_Actor.prototype.createParts = function(array){
-	this._mainSprite.opacity = 0;
+	if(this._visual)this._mainSprite.opacity = 0;
 	Sprite.prototype.createParts.call(this,array,this._mainSprite);
 };
 
@@ -258,7 +258,8 @@ Sprite_Actor.prototype.createPart = function(name,hsv) {
 Rexal.VE.SCupdate = Sprite_Character.prototype.update;
 Sprite_Character.prototype.update = function(){
 Rexal.VE.SCupdate.call(this);
-if(this._isvisual)this.bitmap.clear();
+if(this._visual)this.bitmap.clear();
+
 }
 
  Sprite_Character.prototype.createCharacter = function() {
@@ -390,6 +391,12 @@ Window_Message.prototype.drawMessageFace = function() {
     Rexal.VE.drawMessageFace.call(this);
 };
 
+//Rexal.VE.drawItemImage = Window_MenuStatus.prototype.drawItemImage;
+Window_MenuStatus.prototype.drawAllItems = function() {
+	this.removeParts();
+	Window_Selectable.prototype.drawAllItems.call(this);
+};
+
 Rexal.VE.drawBlock2 = Window_Status.prototype.drawBlock2;
 Window_Status.prototype.drawBlock2 = function(y) {
 
@@ -399,9 +406,8 @@ Rexal.VE.drawBlock2.call(this,y);
 
 Rexal.VE.drawFace = Window_Base.prototype.drawFace;
 Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, height) {
+	this._visual=false;
 	Rexal.VE.drawFace.call(this);
-
-this._noblt = false;
     width = width || Window_Base._faceWidth;
     height = height || Window_Base._faceHeight;
 bitmap = ImageManager.loadFace(faceName);
@@ -421,7 +427,7 @@ bitmap = ImageManager.loadFace(faceName);
 
 		
 	this.createCharacter(bitmap,faceName, faceIndex);
-    if(!this._noblt)this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
+    if(!this._visual)this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
 };
 
 Window_Base.prototype.removeParts = function(){
@@ -450,6 +456,7 @@ var sprites = [];
    {	
 var act = $dataActors[actor.actorId()];
 Rexal.VE.processPartNoteTag(act);
+this._visual = act._visual;
 	if(act.sprites){
 sprites = this.combineParts(sprites,act.sprites);
 	}
@@ -671,7 +678,11 @@ if(!obj)return;
 		if(Rexal.VE.Debug)console.debug('reading ' + line + '...');
 		var lines = line.split(': ');
 		switch (lines[0].toLowerCase()) {
-
+			
+		case '[ve actor]' :
+		obj._visual = true;
+		break;
+		
 		case 've image' :
 		if(lines[1].split(',').length == 1)lines[1]+= ",0";
 		if(lines[1].split(',').length == 2)lines[1]+= ",0";
