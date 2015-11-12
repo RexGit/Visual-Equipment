@@ -30,16 +30,21 @@ Rexal.VE = Rexal.VE || {};
  --------------------------------------------------------------------------------
  Parameters
  ================================================================================
-Debug - Will write to the console if true. THIS SENDS A WHOLE LOT OF LOGS WHICH CAN LAG THE GAME, SO ONLY TURN THIS ON IF YOU ARE HAVING ISSUES
+Debug - Will write to the console if true. THIS SENDS A WHOLE LOT OF LOGS 
+WHICH CAN LAG THE GAME, SO ONLY TURN THIS ON IF YOU ARE HAVING ISSUES
 
-One Sprite Per Layer - By default, you can have an infinite amount of parts per layer. However, making this parameter true will cause only one sprite to show per defined layer, which saves performance. This can be rather difficult to use however, so I recommend using this only if you really need it.
+One Sprite Per Layer - By default, you can have an infinite amount of parts 
+per layer. However, making this parameter true will cause only one sprite to 
+show per defined layer, which saves performance. This can be rather difficult 
+to use however, so I recommend using this only if you really need it.
  --------------------------------------------------------------------------------
  Notetags
  ================================================================================
  [VE Actor]
 
 
-Using this tag will make the actor's sprites(and any instance of them) invisible. This is so you can create an actor entirely from parts.
+Using this tag will make the actor's sprites(and any instance of them) 
+invisible. This is so you can create an actor entirely from parts.
 
 This is, of course, Actor's notes only.
 
@@ -48,23 +53,32 @@ This is, of course, Actor's notes only.
 VE Image name,layer,hue,saturation,value
 
 
-This be used for Actors, Weapons, and Armor. If used for actors, they will always have those parts no matter what...unless you use the One Sprite Per Layer parameter, of course.
+This be used for Actors, Weapons, and Armor. If used for actors, they 
+will always have those parts no matter what...unless you use the One 
+Sprite Per Layer parameter, of course.
 
 
-First, ensure that you have a folder named parts, and inside that folder are three others named character,face, and battler.
+First, ensure that you have a folder named parts, and inside that 
+folder are three others named character,face, and battler.
 
-When you use this tag, the plugin will search the folder relevant to the situation for the sprite with the name you've specified, For example, if the actor's face pops up, it'll look in the "face" folder.
+When you use this tag, the plugin will search the folder relevant to 
+the situation for the sprite with the name you've specified, For 
+example, if the actor's face pops up, it'll look in the "face" folder.
 
-The layer tells the plugin what order the part should be created in. It goes lowest to highest, and by default is 0.
+The layer tells the plugin what order the part should be created in. 
+It goes lowest to highest, and by default is 0.
 
 hue is the color of the part.
 
 saturation is how colorful the part is. 255 is completely colorless.
 
-value is how bright the part is. 0 is the normal value, -255 is black, and 255 is white.
+value is how bright the part is. 0 is the normal value, -255 is 
+black, and 255 is white.
 
 
-note: everything but image can be set to an eval formula. Keep in mind though that right now it only sets these values the moment the parts are created.
+note: everything but image can be set to an eval formula. Keep in 
+mind though that right now it only sets these values the moment 
+the parts are created.
 
  --------------------------------------------------------------------------------
  Version Log
