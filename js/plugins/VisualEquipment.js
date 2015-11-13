@@ -97,6 +97,8 @@ the parts are created.
  // ImageManager
 //=============================================================================
  
+ //TODO look into $gameMap.requestRefresh();
+ 
   ImageManager.loadCharacterPart = function(filename, hue) {
     return this.loadBitmap('img/parts/character/', filename, hue, false);
 };
