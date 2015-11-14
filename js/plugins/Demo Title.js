@@ -6,6 +6,13 @@
  */
 //=============================================================================
 
+Window_EquipSlot.prototype.update = function() {
+    Window_Selectable.prototype.update.call(this);
+    if (this._itemWindow) {
+       if(this.index()!=6) this._itemWindow.setSlotId(this.index());
+    }
+};
+
 
 Scene_Title.prototype.createCommandWindow = function() {
     this._commandWindow = new Window_TitleCommand();
@@ -66,6 +73,7 @@ Scene_Travel.prototype.createtravelWindow = function() {
     this._travelWindow.setHandler('cancel', this.popScene.bind(this));
 	 this._travelWindow.setHandler('diegohouse',  this.travelDiego.bind(this));
 	 this._travelWindow.setHandler('fortwallgard',  this.travelWallgard.bind(this));
+	 this._travelWindow.setHandler('teconrs',  this.travelEvilCastle.bind(this));
     this.addWindow(this._travelWindow);
 };
 
@@ -81,6 +89,13 @@ Scene_Travel.prototype.travelWallgard = function() {
     this.fadeOutAll();
     SceneManager.goto(Scene_Map);
 	 $gamePlayer.reserveTransfer(2, 10, 38, 0, 0);
+};
+
+Scene_Travel.prototype.travelEvilCastle = function() {
+    this._travelWindow.close();
+    this.fadeOutAll();
+    SceneManager.goto(Scene_Map);
+	 $gamePlayer.reserveTransfer(3, 24, 43, 0, 0);
 };
 
 WMCAOC = Window_MenuCommand.prototype.addOriginalCommands;
@@ -136,13 +151,14 @@ Window_Travel.prototype.makeCommandList = function() {
 
 Window_Travel.prototype.addOptions = function() {
 
-	this.addText("-Animated Enemies-");
+	this.addText("Animated Enemies-");
     this.addCommand("The Arena", 'arena',false);
-	this.addText("-Random Enemies-");
+	this.addText("Random Enemies-");
 	this.addCommand("Fort Wallgard", 'fortwallgard');
-	this.addText("-Visual Equipment-");
+	this.addText("Visual Equipment-");
     this.addCommand("Diego's House", 'diegohouse');
-	this.addText("-Weapon Sprites Enhanced-");
+	this.addCommand("The Evil Castle of no Real Significance", 'teconrs');
+	this.addText("Weapon Sprites Enhanced-");
 	this.addCommand("Weapon Shop", 'weaponshop',false);
 };
 
@@ -207,7 +223,7 @@ Window_Cutscene.prototype = Object.create(Window_Travel.prototype);
 Window_Cutscene.prototype.constructor = Window_Cutscene;
 
 Window_Cutscene.prototype.addOptions = function() {
-
+	this.addText("Visual Equipment");
     this.addCommand("Alvin gets a new hair style", 'aganhs');
 
 };
