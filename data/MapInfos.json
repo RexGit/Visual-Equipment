@@ -13,7 +13,6 @@ null,
 {"id":11,"expanded":true,"name":"Hospital","order":11,"parentId":0,"scrollX":1152,"scrollY":1084},
 {"id":12,"expanded":false,"name":"Downtown","order":12,"parentId":11,"scrollX":1310,"scrollY":1084},
 {"id":13,"expanded":false,"name":"Mountain Village","order":13,"parentId":0,"scrollX":1274,"scrollY":1714},
-{"id":14,"expanded":true,"name":"Foreast Town","order":14,"parentId":0,"scrollX":816,"scrollY":1160},
-{"id":15,"expanded":false,"name":"Inside the Fortress","order":16,"parentId":0,"scrollX":816,"scrollY":800},
-{"id":16,"expanded":false,"name":"MAP016","order":15,"parentId":14,"scrollX":497,"scrollY":406}
+{"id":14,"expanded":false,"name":"Foreast Town","order":14,"parentId":0,"scrollX":740,"scrollY":1882},
+{"id":15,"expanded":false,"name":"Inside the Fortress","order":15,"parentId":0,"scrollX":740,"scrollY":1042}
 ]

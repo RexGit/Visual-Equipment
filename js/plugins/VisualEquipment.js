@@ -222,6 +222,8 @@ this._actorFlags = [];
 	Game_System.prototype.setPose = function(id,pose)
 	{
 	if(pose)this._pose = "_" + pose;
+	else
+		this._pose = null;
 		this._poseActor = id;
 		 Game_System.prototype.updateActors();
 	}
@@ -579,7 +581,7 @@ Sprite_Part.prototype.constructor = Sprite_Part;
  
  Sprite_Part.prototype.HSV = function(){
 	Sprite.prototype.HSV.call(this,this,this._hsv);
-	if($gameSystem._poseActor == this._actor._actorId)this._pose = $gameSystem._pose;
+	if($gameSystem._poseActor == this._actor._actorId){this._pose = $gameSystem._pose;}
 	this.bitmap = Rexal.ImageManager.loadCharacterPart(this._part, this._hsv[0],this._prefix,this._pose);
 };
  

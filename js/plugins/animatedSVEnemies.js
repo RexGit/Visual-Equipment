@@ -9,7 +9,7 @@ Imported.AnimatedSVEnemies = true;
 var Rexal = Rexal || {};
 Rexal.ASVE = Rexal.ASVE || {};
 /*:
- * @plugindesc Version: 1.15.5.1 - The Re-Remake
+ * @plugindesc Version: 1.16a - The Re-Remake
  * - Lets enemies be animated!
  * @author Rexal
  *
@@ -237,14 +237,6 @@ Rexal.ASVE.setactorhome = Sprite_Actor.prototype.setActorHome;
   BattleManager.processDefeat = function() {
 	  Rexal.ASVE.processDefeat.call(this);
     if(Rexal.ASVE.Celebration)$gameTroop.performVictory();
-	this.displayDefeatMessage();
-    this.playDefeatMe();
-    if (this._canLose) {
-        this.replayBgmAndBgs();
-    } else {
-        AudioManager.stopBgm();
-    }
-    this.endBattle(2);
 };
   }
   
