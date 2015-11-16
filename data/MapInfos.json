@@ -2,7 +2,7 @@
 null,
 {"id":1,"expanded":false,"name":"Diego's House","order":1,"parentId":0,"scrollX":489,"scrollY":406},
 {"id":2,"expanded":true,"name":"Fort Wallgard","order":2,"parentId":0,"scrollX":1957,"scrollY":398},
-{"id":3,"expanded":true,"name":"The Evil Castle of no Real Significance","order":3,"parentId":2,"scrollX":1274,"scrollY":1986},
+{"id":3,"expanded":true,"name":"The Evil Castle of no Real Significance","order":3,"parentId":2,"scrollX":1266,"scrollY":1978},
 {"id":4,"expanded":false,"name":"MAP004","order":9,"parentId":0,"scrollX":994,"scrollY":812},
 {"id":5,"expanded":true,"name":"Demon Castle 2","order":4,"parentId":3,"scrollX":1070,"scrollY":2002},
 {"id":6,"expanded":false,"name":"Demon Castle 3","order":5,"parentId":5,"scrollX":1042,"scrollY":1282},
@@ -13,6 +13,7 @@ null,
 {"id":11,"expanded":true,"name":"Hospital","order":11,"parentId":0,"scrollX":1152,"scrollY":1084},
 {"id":12,"expanded":false,"name":"Downtown","order":12,"parentId":11,"scrollX":1310,"scrollY":1084},
 {"id":13,"expanded":false,"name":"Mountain Village","order":13,"parentId":0,"scrollX":1274,"scrollY":1714},
-{"id":14,"expanded":false,"name":"Foreast Town","order":14,"parentId":0,"scrollX":740,"scrollY":1882},
-{"id":15,"expanded":false,"name":"Inside the Fortress","order":15,"parentId":0,"scrollX":740,"scrollY":1042}
+{"id":14,"expanded":true,"name":"Foreast Town","order":14,"parentId":0,"scrollX":816,"scrollY":1160},
+{"id":15,"expanded":false,"name":"Inside the Fortress","order":16,"parentId":0,"scrollX":816,"scrollY":800},
+{"id":16,"expanded":false,"name":"MAP016","order":15,"parentId":14,"scrollX":497,"scrollY":406}
 ]
