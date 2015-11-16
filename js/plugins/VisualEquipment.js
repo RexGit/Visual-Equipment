@@ -8,7 +8,7 @@ Imported.RexalVisualEquipment = true;
 var Rexal = Rexal || {};
 Rexal.VE = Rexal.VE || {};
 /*:
- * @plugindesc Version: 1.1a -
+ * @plugindesc Version: 1.1b -
  * Visualize your Equipment!
  * @author Rexal
  *
@@ -155,6 +155,13 @@ VE Color: layer,hue,saturation,value
  - General Improvements.
  - Added SetVEPose, which lets you set the pose for the sprites to use.
  - Added ClearVEPose, which restores the sprites to default.
+ 
+ 1.1b -
+ - Actor's faces without [VE Actor] no longer disappear when equipping something.
+ - Balloons should be in the right spot now.
+ - ClearVEPose actually works like it's supposed to now.
+ - If the plugin cannot find a sprite with the desired prefix, it'll search for the prefixless one.
+ 
  */
  
   
@@ -197,7 +204,7 @@ Game_Party.prototype.charactersForSavefile = function() {
                 $gameSystem.setPose(Number(args[0]),String(args[1]));
             }
 						 if (command === 'ClearVEPose') {
-                $gameSystem.setPose(Number(args[0]),"");
+                $gameSystem.setPose(Number(args[0]));
             }
     };
  
@@ -214,10 +221,9 @@ this._actorFlags = [];
 	
 	Game_System.prototype.setPose = function(id,pose)
 	{
-		this._pose = "_" + pose;
+	if(pose)this._pose = "_" + pose;
 		this._poseActor = id;
 		 Game_System.prototype.updateActors();
-		console.log(this._pose);
 	}
  
  var gpaa = Game_Party.prototype.addActor;
@@ -243,21 +249,31 @@ Game_System.prototype.updateActors();
 		if(!prefix)prefix = "";
 		if(!pose)pose = "";
 		bitmap = this.loadBitmap('img/parts/character/', prefix+filename+pose, hue, false);
-		
+		if(bitmap.isError()&&prefix)
+		bitmap = this.loadBitmap('img/parts/character/',filename+pose, hue, false);
+		if(bitmap.isError())
+		bitmap = this.loadBitmap('img/parts/character/','blank', hue, false);			
+	
 	  return bitmap;
 };
 
   Rexal.ImageManager.loadBattlerPart = function(filename, hue, prefix) {
 	if(!prefix)prefix = "";
    bitmap = this.loadBitmap('img/parts/battler/', prefix+filename, hue, false);
-		
+		if(bitmap.isError()&&prefix)
+	bitmap = this.loadBitmap('img/parts/battler/', filename, hue, false);
+		if(bitmap.isError())
+		bitmap = this.loadBitmap('img/parts/battler/','blank', hue, false);		
 	  return bitmap;
 };
 
 Rexal.ImageManager.loadFacePart = function(filename, hue, prefix) {
 	if(!prefix)prefix = "";
     bitmap = this.loadBitmap('img/parts/face/', prefix+filename, hue, true);
-		
+		if(bitmap.isError()&&prefix)	
+ bitmap = this.loadBitmap('img/parts/face/', filename, hue, true);		
+		if(bitmap.isError())
+		bitmap = this.loadBitmap('img/parts/face/','blank', hue, false);			
 	  return bitmap;
 };
 
@@ -509,7 +525,14 @@ gacebi.call(this,etypeId, itemId);
 $gameSystem.updateActors();
 };
 
-
+scub = Sprite_Character.prototype.updateBalloon;
+Sprite_Character.prototype.updateBalloon = function() {
+scub.call(this);
+    if (this._balloonSprite) {
+        this._balloonSprite.x = 0;
+        this._balloonSprite.y = -this.height;
+        }
+};
 
 
  Sprite_Character.prototype.createCharacter = function() {
@@ -663,11 +686,9 @@ Window_Base.prototype.drawFace = function(faceName, faceIndex, x, y, width, heig
 	Rexal.VE.drawFace.call(this);
     width = width || Window_Base._faceWidth;
     height = height || Window_Base._faceHeight;
-bitmap = ImageManager.loadFace(faceName);
+	var bitmap = ImageManager.loadFace(faceName);
 	this._fax = x;
 	this._fay = y;
-
-	this._bltArray = [];
 	var pw = Window_Base._faceWidth;
 
     var ph = Window_Base._faceHeight;
@@ -677,11 +698,10 @@ bitmap = ImageManager.loadFace(faceName);
     var dy = Math.floor(y + Math.max(height - ph, 0) / 2);
     var sx = faceIndex % 4 * pw + (pw - sw) / 2;
     var sy = Math.floor(faceIndex / 4) * ph + (ph - sh) / 2;
-
-		
 	var actor = Rexal.VE.findActorByFace(faceName, faceIndex);
 	this.createCharacter(actor);
-    if(!this._visual)this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
+    if(this._visual)bitmap = ImageManager.loadFacePart("blank");
+	this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
 };
 
 
@@ -744,8 +764,6 @@ if(equip.prefix) this._prefix = equip.prefix;
  
 	if(sprites && actor){
 		actor._prefix = this._prefix;
-		
-		this._noblt = true;
 		this.createParts(sprites);
 	}
 		
