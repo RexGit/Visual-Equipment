@@ -262,10 +262,10 @@ if(!obj || !obj.note)return;
 		var lines = line.split(': ');
 		
 		switch (lines[0]) {
-		case 'weapon image'':
+		case 'weapon image' :
         Rexal.SWE._image = lines[1];
 		break;
-				case 'weaponimage'':
+				case 'weaponimage' :
         Rexal.SWE._image = lines[1];
 		break;		
 		case 'weapon index' :
