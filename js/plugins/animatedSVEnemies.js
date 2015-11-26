@@ -183,6 +183,9 @@ Ex. SV Anchor: .5,1
 	v1.16a
 	
 	-THINGS
+	- General Improvements
+	- Added SV Sprite
+	- Changed the way weapons are handled.
  
  --------------------------------------------------------------------------------
  Motion List
@@ -250,13 +253,23 @@ Rexal.ASVE.setactorhome = Sprite_Actor.prototype.setActorHome;
 //=============================================================================
 
 Game_Enemy.prototype.weapons = function() {
- if(this._animated) return [$dataWeapons[this._weaponId]];
- else return [1];
+var item = this._equips[0];
+return [item && DataManager.isWeapon(item)];
 };
 
+Game_Enemy.prototype.hasWeapon = function(weapon) {
+    return this._equips[0];
+};
 
 Game_Enemy.prototype.performAttack = function() {
+	
+if(this._equips[0])
 	Game_Actor.prototype.performAttack.call(this);
+else
+{
+ this.requestMotion(this._motion);
+}
+
 };
 
 Game_Enemy.prototype.attackAnimationId1 = function() {
@@ -272,9 +285,7 @@ Game_Actor.prototype.bareHandsAnimationId.call(this);
 };
 
 Game_Enemy.prototype.hasNoWeapons = function() {
- if(this._animated && this._weaponId!=0)
-	 return false;
-	 else return true;
+Game_Actor.prototype.hasNoWeapons.call(this);
 }
 
 
@@ -371,7 +382,7 @@ Sprite_Enemy.prototype.updateBitmap = function() {
 	
 	if(this._enemy._floating && !this.isBusy)
 	{
-		var f = Math.cos(Graphics.frameCount/50+this._random[2])*20;
+		var f = Math.cos(Graphics.frameCount/50+this._random[2]*a)*20*a;
 		this.setHome(this._enemy.screenX(),this._enemy.screenY()+f);
 	}
 	
@@ -696,6 +707,7 @@ Spriteset_Battle.prototype.createEnemies = function() {
 
 Object.defineProperties(Game_Enemy.prototype, {
   animated: { get: function() { return this._animated; }, configurable: true },
+  weapon: { get: function() { return this._weapon; }, configurable: true },
   sprite: { get: function() { return this._battleSprite; }, configurable: true },
   motion: { get: function() { return this._motion; }, configurable: true },
   weaponid: { get: function() { return this._weaponId; }, configurable: true },
@@ -736,6 +748,9 @@ switch (type) {
 }
 
 Rexal.ASVE.processEnemyData = function(obj,obj2) {
+if(!obj._equips)obj._equips = [];
+	if(obj2.weapon){	obj._equips[0] = new Game_Item();
+	obj._equips[0].setObject(obj2.weapon);}
 obj._breath = [];
 obj._weaponAnchor = [];
 obj._anchor = [];
@@ -756,11 +771,9 @@ obj._anchor = obj2.anchor;
 }
 
 Rexal.ASVE.processEnemyNoteTag = function(obj) {
-
 Rexal.log('reading ' + obj.name + '...');
 obj.battleSprite = "";
 obj.motion = 'thrust';
-obj.weaponid = 0;
 obj.collapse = Rexal.ASVE.DoCollapse;
 obj.breath = [50,5,25];
 obj.scale = 1.0;
@@ -796,8 +809,8 @@ if(obj == null)return;
 		break;
 		
 		case 'sv weapon' :
-        obj.weaponid = parseInt(lines[1]);
-		Rexal.log(obj.name + " has weapon " + $dataWeapons[obj.weaponid].name,'info');
+		 obj.weapon = $dataWeapons[parseInt(lines[1])] ;
+		Rexal.log(obj.weapon);
 		break;
 		
 		case '[breathless]' :
