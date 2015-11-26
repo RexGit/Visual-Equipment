@@ -341,7 +341,7 @@ Game_Troop.prototype.performVictory = function() {
 
 Sprite_Enemy.prototype.setBattler = function(battler) {
     Sprite_Battler.prototype.setBattler.call(this, battler);
-	this._random = [Math.random()*1000000,Math.random()*1000000];
+	this._random = [Math.random()*1000000,Math.random()*1000000,Math.random()*1000000];
     this._enemy = battler;
     this.setHome(battler.screenX(), battler.screenY());
     this._stateIconSprite.setup(battler);
@@ -371,7 +371,7 @@ Sprite_Enemy.prototype.updateBitmap = function() {
 	
 	if(this._enemy._floating && !this.isBusy)
 	{
-		var f = Math.cos(Graphics.frameCount/50)*20;
+		var f = Math.cos(Graphics.frameCount/50+this._random[2])*20;
 		this.setHome(this._enemy.screenX(),this._enemy.screenY()+f);
 	}
 	
