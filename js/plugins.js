@@ -8,8 +8,9 @@ var $plugins =
 {"name":"VisualEquipment","status":true,"description":"Version: 1.1a -\r\nVisualize your Equipment!","parameters":{"Debug":"false","One Sprite Per Layer":"false","Show Fadeout":"false"}},
 {"name":"animatedSVEnemies","status":true,"description":"Version: 1.15.5 - The Re-Remake\r\n- Lets enemies be animated!","parameters":{"Debug":"true","No Movement":"false","Enemies Celebrate":"true","SV Enemies Collapse":"false","Static Enemies Breathe":"true","AGI Effects Breathing":"true","Scale Statics by Distance":"true","Damage Slows Down Breathing":"true"}},
 {"name":"RandomEnemies","status":true,"description":"Lets you set up dummy enemies to be\nreplaced by random ones.","parameters":{}},
-{"name":"SpriteWeaponEnhanced","status":true,"description":"v1.14a - ReTooled:\r\nMakes the Weapon's battle image much more customizable.","parameters":{}},
+{"name":"SpriteWeaponEnhanced","status":true,"description":"v1.15 - ReTooled:\r\nMakes the Weapon's battle image much more customizable.","parameters":{}},
 {"name":"--------------------","status":false,"description":"------------------------------------------------------------","parameters":{}},
 {"name":"SkillMessageTargetName","status":true,"description":"Using %2 in the battle message\r\nwill show the target's name(s).","parameters":{}},
-{"name":"--------------------","status":false,"description":"------------------------------------------------------------","parameters":{}}
+{"name":"--------------------","status":false,"description":"------------------------------------------------------------","parameters":{}},
+{"name":"BattlersEnhanced","status":false,"description":"Version: 0 - Pre-Alpha\r\n- THIS IS A WIP","parameters":{}}
 ];

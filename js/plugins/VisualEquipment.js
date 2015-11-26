@@ -637,7 +637,6 @@ Sprite_PartBattle.prototype.update = function() {
 	this._pattern = this.parent._pattern;
 	this.x = 0;
 	this.y = 0;
-	this._mainSprite.scale = this.parent._mainSprite.scale;
 };
 
 Sprite_PartBattle.prototype.setActorHome = function(index) {

@@ -1,6 +1,6 @@
 //=============================================================================
 // AnimatedSVEnemies.js
-// Version: 1.15.5.1 - The Re-Remake
+// Version: 1.16a - The Re-Remake
 //=============================================================================
 
 var Imported = Imported || {};
@@ -179,6 +179,10 @@ Ex. SV Anchor: .5,1
 	
 	v1.15.5.1
 	-Should be more compatible with stuff
+	
+	v1.16a
+	
+	-THINGS
  
  --------------------------------------------------------------------------------
  Motion List
@@ -246,7 +250,6 @@ Rexal.ASVE.setactorhome = Sprite_Actor.prototype.setActorHome;
 //=============================================================================
 
 Game_Enemy.prototype.weapons = function() {
-	
  if(this._animated) return [$dataWeapons[this._weaponId]];
  else return [1];
 };
@@ -338,6 +341,7 @@ Game_Troop.prototype.performVictory = function() {
 
 Sprite_Enemy.prototype.setBattler = function(battler) {
     Sprite_Battler.prototype.setBattler.call(this, battler);
+	this._random = [Math.random()*1000000,Math.random()*1000000];
     this._enemy = battler;
     this.setHome(battler.screenX(), battler.screenY());
     this._stateIconSprite.setup(battler);
@@ -348,24 +352,21 @@ Sprite_Enemy.prototype.updateBitmap = function() {
  Rexal.ASVE.Sprite_Enemy_updateBitmap.call(this);
 
 	if(!this._enemy._breathless && Rexal.ASVE.Breathe){
-
 		var a = 1;
 		if(Rexal.ASVE.AGIB) a = this._enemy.agi/100+1;
 	var breathS = this._enemy._breath[0]/1000;
+	var bx = (Graphics.frameCount+this._random[0]);
+	var by = (Graphics.frameCount+this._random[1]);
 	if(Rexal.ASVE.DamageSlow) breathS *= (this._enemy.hp/this._enemy.mhp)+.1;
-	var breathY = Math.cos(Graphics.frameCount*breathS*a)*(this._enemy._breath[2]/1000);
-	var breathX = Math.cos(Graphics.frameCount*breathS)*(this._enemy._breath[1]/1000);
-	
+	var breathY = Math.cos(bx*breathS*a)*(this._enemy._breath[2]/1000);
+	var breathX = Math.cos(by*breathS)*(this._enemy._breath[1]/1000);
 	if(Rexal.ASVE.DamageSlow)breathY *= (this._enemy.hp/this._enemy.mhp);
 	var ss = Graphics.boxHeight/624+.1;
 	if(Rexal.ASVE.ScaleStatics)var s = ss*(this._homeY/Graphics.boxHeight)*this._enemy._scale;
 	else var s = this._enemy._scale;
-	
 	this.smooth = true;
-	
 	this.scale.y = s+breathY;
 	this.scale.x = s+breathX;
-	
 	}
 	
 	if(this._enemy._floating && !this.isBusy)
@@ -376,15 +377,15 @@ Sprite_Enemy.prototype.updateBitmap = function() {
 	
 };
 
-
+var sesf = Sprite_Enemy.prototype.stepForward;
 Sprite_Enemy.prototype.stepForward = function() {
-   if(!Rexal.ASVE.NoMovement) this.startMove(48, 0, 12);
+   if(!Rexal.ASVE.NoMovement) sesf.call(this);
 };
 
 
-	
+	var sesh = Sprite_Enemy.prototype.setHome;
 		Sprite_Enemy.prototype.setHome = function(x,y) {
-			
+			sesh.call(this,x,y);
 			var dX = Graphics.boxWidth/816;
 			var dY = Graphics.boxHeight/624;
 			
@@ -408,39 +409,22 @@ function Sprite_EnemyRex() {
  Sprite_EnemyRex.prototype = Object.create(Sprite_Actor.prototype);
 Sprite_EnemyRex.prototype.constructor = Sprite_EnemyRex;
 
-Sprite_EnemyRex.prototype.createWeaponSprite = function() {
-	
-    this._weaponSprite = new Sprite_Weapon();
-
-    this.addChild(this._weaponSprite);
-};
-
-
-Sprite_EnemyRex.prototype.updateSelectionEffect = function() {
-	
-	    var target = this._effectTarget;
-    if (this._battler.isSelected()) {
-        this._selectionEffectCount++;
-        if (this._selectionEffectCount % 30 < 15) {
-            target.setBlendColor([255, 255, 255, 64]);
-        } else {
-            target.setBlendColor([0, 0, 0, 0]);
-        }
-    } else if (this._selectionEffectCount > 0) {
-        this._selectionEffectCount = 0;
-        target.setBlendColor([0, 0, 0, 0]);
-    }
-	
-}
-
  Sprite_EnemyRex.prototype.loadBitmap = function(name, hue) {
-
+	   if(this._actor._battleSprite != "")name = this._battleSprite;
         this.bitmap = ImageManager.loadSvActor(name,hue);
 };
 
 Sprite_EnemyRex.prototype.setBattler = function(battler) {
+	// this._enemySprite = new Sprite_Enemy(battler);
+		// this._enemySprite._homeX = 0;
+    // this._enemySprite._homeY = 0;
+	
+
     Sprite_Battler.prototype.setBattler.call(this, battler);
-    var changed = (battler !== this._actor);
+	//this.addChild(this._enemySprite);
+
+
+	var changed = (battler !== this._actor);
     if (changed) {
         this._actor = battler;
 		this._enemy = battler;
@@ -453,34 +437,39 @@ Sprite_EnemyRex.prototype.setBattler = function(battler) {
 };
 
 
+
 Sprite_EnemyRex.prototype.updateBitmap = function() {
+
 	Rexal.ASVE.spriteactorupdatebitmap.call(this);
 	this.updateEffect();
 	var hue = this._actor.battlerHue();
-    var name = this._actor.battlerName();
+ var name = this._actor.battlerName();
+  if(this._actor._battleSprite)name = this._actor._battleSprite;
+
         this._mainSprite.bitmap = ImageManager.loadSvActor(name,hue);
-		this._mainSprite.scale.x = -this._actor._scale;
-		this._mainSprite.scale.y = this._actor._scale;
 		this._mainSprite.anchor.x = this._actor._anchor[0];
 		this._mainSprite.anchor.y = this._actor._anchor[1];
-
+	this.flipChildren();
 };
+
+Sprite_EnemyRex.prototype.flipChildren = function(){
+for(var i = 0; i<this.children.length; i++)
+{
+if(this.children[i].scale.x!=-this._actor._scale)this.children[i].scale.x = -this._actor._scale;
+if(this.children[i].scale.y!=this._actor._scale) this.children[i].scale.y = this._actor._scale;
+}
+
+}
 
 Sprite_EnemyRex.prototype.setupWeaponAnimation = function() {
 	
 	Rexal.ASVE.setupweaponanimation.call(this);
 		if(!this._weaponSprite._positioned)
-		{
-			
+		{	
 		var scale = this._actor._scale+this._actor._weaponScale;
-		
-		this._weaponSprite.scale.x = -scale;
-		this._weaponSprite.scale.y = scale;
 		this._weaponSprite.x = -this._weaponSprite.x*scale;
-        
 		this._weaponSprite.anchor.x = this._actor._weaponAnchor[0];
 		this._weaponSprite.anchor.y = this._actor._weaponAnchor[1];
-		
 		this._weaponSprite._positioned = true;
 		}
 		
@@ -540,9 +529,6 @@ Sprite_EnemyRex.prototype.startEffect = function(effectType) {
     case 'whiten':
         this.startWhiten();
         break;
-    case 'blink':
-        this.startBlink();
-        break;
     case 'collapse':
      if(this._actor._collapse)   this.startCollapse();
         break;
@@ -593,9 +579,6 @@ Sprite_EnemyRex.prototype.updateEffect = function() {
         switch (this._effectType) {
         case 'whiten':
             this.updateWhiten();
-            break;
-        case 'blink':
-            this.updateBlink();
             break;
         case 'appear':
             this.updateAppear();
@@ -713,6 +696,7 @@ Spriteset_Battle.prototype.createEnemies = function() {
 
 Object.defineProperties(Game_Enemy.prototype, {
   animated: { get: function() { return this._animated; }, configurable: true },
+  sprite: { get: function() { return this._battleSprite; }, configurable: true },
   motion: { get: function() { return this._motion; }, configurable: true },
   weaponid: { get: function() { return this._weaponId; }, configurable: true },
   breathless: { get: function() { return this._breathless; }, configurable: true },
@@ -756,6 +740,7 @@ obj._breath = [];
 obj._weaponAnchor = [];
 obj._anchor = [];
 obj._animated = obj2.animated;
+obj._battleSprite = obj2.battleSprite;
 obj._motion = obj2.motion;
 obj._weaponId = obj2.weaponid;
 obj._breathless = obj2.breathless;
@@ -773,7 +758,7 @@ obj._anchor = obj2.anchor;
 Rexal.ASVE.processEnemyNoteTag = function(obj) {
 
 Rexal.log('reading ' + obj.name + '...');
-
+obj.battleSprite = "";
 obj.motion = 'thrust';
 obj.weaponid = 0;
 obj.collapse = Rexal.ASVE.DoCollapse;
@@ -796,6 +781,13 @@ if(obj == null)return;
 		case '[sv animated]' :
         obj.animated = true;
 		Rexal.log(obj.name + ' is using SV Battler sprites','info');
+		break;
+		
+		case 'sv sprite' :
+		obj.animated = true;
+        obj.battleSprite = lines[1];
+		Rexal.log(obj.name + ' is using SV Battler sprites','info');
+
 		break;
 		
 		case 'sv motion' :

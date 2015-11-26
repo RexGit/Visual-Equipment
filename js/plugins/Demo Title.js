@@ -74,6 +74,7 @@ Scene_Travel.prototype.createtravelWindow = function() {
 	 this._travelWindow.setHandler('diegohouse',  this.travelDiego.bind(this));
 	 this._travelWindow.setHandler('fortwallgard',  this.travelWallgard.bind(this));
 	 this._travelWindow.setHandler('teconrs',  this.travelEvilCastle.bind(this));
+	 this._travelWindow.setHandler('weaponshop',  this.travelWeapon.bind(this));
     this.addWindow(this._travelWindow);
 };
 
@@ -82,6 +83,13 @@ Scene_Travel.prototype.travelDiego = function() {
     this.fadeOutAll();
     SceneManager.goto(Scene_Map);
 	 $gamePlayer.reserveTransfer(1, 8, 6, 0, 0);
+};
+
+Scene_Travel.prototype.travelWeapon = function() {
+    this._travelWindow.close();
+    this.fadeOutAll();
+    SceneManager.goto(Scene_Map);
+	 $gamePlayer.reserveTransfer(16, 7, 12, 0, 0);
 };
 
 Scene_Travel.prototype.travelWallgard = function() {
@@ -159,7 +167,7 @@ Window_Travel.prototype.addOptions = function() {
     this.addCommand("Diego's House", 'diegohouse');
 	this.addCommand("The Evil Castle of no Real Significance", 'teconrs');
 	this.addText("Weapon Sprites Enhanced-");
-	this.addCommand("Weapon Shop", 'weaponshop',false);
+	this.addCommand("Weapon Shop", 'weaponshop',true);
 };
 
 Window_Travel.prototype.select = function(index) {

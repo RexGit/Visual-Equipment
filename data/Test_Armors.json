@@ -1,0 +1,20 @@
+[
+null,
+{"id":1,"atypeId":5,"description":"","etypeId":2,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":128,"name":"Shield","note":"ve image neutral: shield,7","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":2,"atypeId":1,"description":"","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Hat","note":"","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":3,"atypeId":1,"description":"","etypeId":4,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":135,"name":"Clothes","note":"ve image: Clothes,5","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":4,"atypeId":1,"description":"","etypeId":5,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":145,"name":"Ring","note":"","params":[0,0,0,0,10,0,0,0],"price":300},
+{"id":5,"atypeId":0,"description":"","etypeId":2,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":0,"name":"","note":"","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":6,"atypeId":1,"description":"","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Headband","note":"ve image neutral: headband,4\n\n","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":7,"atypeId":1,"description":"It has a wig so you can be extra witchy","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Witch's Hat","note":"ve image neutral: witchHat,7\nve image neutral: aBack,-1,0,255\nve image neutral: aFront,6,0,255\nve image neutral: aSide,3,0,255\nve hide: -1\nve hide: 3\nve hide: 6","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":8,"atypeId":1,"description":"","etypeId":6,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":0,"name":"Cool Shades","note":"ve image neutral: shades,2","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":9,"atypeId":1,"description":"","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Stealth Headband","note":"ve image: headband,4,155,100,-155,true","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":10,"atypeId":1,"description":"","etypeId":6,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":0,"name":"Bright Shades","note":"ve image: shades,2,0,0,100,true","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":11,"atypeId":1,"description":"","etypeId":4,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":135,"name":"Stealth Gear","note":"ve image: Clothes,5,155,100,-55","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":12,"atypeId":1,"description":"I dunno man, it was purple when I bought it!","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Hat of Mystery","note":"ve image: witchHat,7,Math.randomInt(360),Math.randomInt(255),Math.randomInt(200)-100,true","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":13,"atypeId":1,"description":"You am become woman","etypeId":5,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":146,"name":"Necklace of Femininity","note":"ve prefix: female","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":14,"atypeId":1,"description":"You am become man","etypeId":5,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":146,"name":"Necklace of Masculinity","note":"ve prefix: male","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":15,"atypeId":1,"description":"","etypeId":4,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":137,"name":"Iron Armor","note":"ve image: IronArmor, 5","params":[0,0,0,20,0,0,0,0],"price":0},
+{"id":16,"atypeId":0,"description":"","etypeId":2,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":0,"name":"","note":"","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":17,"atypeId":1,"description":"Makes you invisible.\nJust think of the things you can do with this!","etypeId":5,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":145,"name":"Ring of Invisibility","note":"ve image: blank\nve hide: 0\nve hide: 1\nve hide: 2\nve hide: 3\nve hide: 6\nve hide: -1","params":[0,0,0,0,0,0,0,0],"price":0}
+]

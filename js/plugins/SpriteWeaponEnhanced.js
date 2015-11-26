@@ -64,7 +64,7 @@ Rexal.SWE = Rexal.SWE || {};
  Weapon Index: 2
  Weapon Hue: 155
  Weapon Motion: skill
- Weapon Sound: ice2,0,100,100
+ Weapon Sound: ice2, 0, 100, 100
  
  This will make the weapon a blue staff and have the actor play the skill SV motion while playing the Ice2 SE when attacking.
  
