@@ -111,6 +111,9 @@ Rexal.SWE = Rexal.SWE || {};
  -Works with animated enemies now.
  -Rewrote the tags. Legacy spelling still works.
  
+ v1.14b -
+ Works with anything that equips enemies.
+ 
  */
 
    //-----------------------------------------------------------------------------
@@ -119,12 +122,13 @@ Rexal.SWE = Rexal.SWE || {};
 gapa = Game_Actor.prototype.performAttack;
 Game_Actor.prototype.performAttack = function() {
 	gapa.call(this);
-	if(this.weapons()){
-		Rexal.SWE.processWeaponNoteTag(this.weapons()[0]);
+	var weapon = $dataWeapons[this._equips[0]._itemId];
+	console.log(weapon);
+	if(weapon){
+		Rexal.SWE.processWeaponNoteTag(weapon);
 			if(Rexal.SWE._playSound){AudioManager.playSe(Rexal.SWE._sound);}
-	
             this.requestMotion(Rexal.SWE._attackMotion);
-        this.startWeaponAnimation(1);
+      this.startWeaponAnimation(1);
 	}
 };
  
@@ -137,7 +141,7 @@ Game_Actor.prototype.performAttack = function() {
     if (this._actor.isWeaponAnimationRequested()) {
 
 		var weapon = this._actor.weapons()[0];
-        this._weaponSprite.setupRex(weapon,this._actor.weaponImageId());
+        this._weaponSprite.setup(weapon,this._actor.weaponImageId());
         this._actor.clearWeaponAnimation();
     }
 };
@@ -150,6 +154,7 @@ Game_Actor.prototype.performAttack = function() {
 sws = Sprite_Weapon.prototype.setup;
 Sprite_Weapon.prototype.setup = function(weapon,id) {
 	sws.call(this,id);
+	if(!weapon)return;
 	this._frames = 3;
 	this._weaponWidth = Rexal.SWE._width;
 	this._weaponHeight = Rexal.SWE._height;
@@ -234,7 +239,6 @@ Sprite_Weapon.prototype.updatePatternRex = function() {
 
 
 Rexal.SWE.processWeaponNoteTag = function(obj) {
-
 Rexal.SWE._image = 'weapons1';
 Rexal.SWE._attackMotion = "swing";
 Rexal.SWE._hue = 0;
