@@ -172,30 +172,35 @@ if(obj == null)return;
 		var lines = line.split(': ');
 		
 		switch (lines[0].toLowerCase()) {
-		
-		
+	
 		
 		case 'battler frames' :
+		sprite._isenhanced = true;
         sprite._frames = parseInt(lines[1]);
 		break;
 		
 		case 'frame speed' :
+		sprite._isenhanced = true;
         sprite._speed = parseInt(lines[1]);
 		break;	
 
 		case 'battler rows' :
+		sprite._isenhanced = true;
         sprite._motions = parseInt(lines[1]);
 		break;
 		
 		case 'battler columns' :
+		sprite._isenhanced = true;
         sprite._columns = parseInt(lines[1]);
 		break;
 		
 			case 'battler scale' :
+			sprite._isenhanced = true;
         sprite._scale = parseFloat(lines[1]);
 		break;	
 		
 			case 'battler motion' :
+			sprite._isenhanced = true;
 			var lines2 = lines[1].split(',');
 			sprite._motionsRex[lines2[0]].index = parseInt(lines2[1])-1;
 			sprite._motionsRex[lines2[0]].loop = eval(lines2[2]);

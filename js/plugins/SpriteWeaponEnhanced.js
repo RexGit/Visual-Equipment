@@ -113,12 +113,15 @@ Rexal.SWE = Rexal.SWE || {};
  
  v1.14b -
  Works with anything that equips enemies.
+ Added a tag to let you equip enemies with a weapon.
  
  */
 
    //-----------------------------------------------------------------------------
 // Game_Actor
 //=============================================================================
+
+
 gapa = Game_Actor.prototype.performAttack;
 Game_Actor.prototype.performAttack = function() {
 	gapa.call(this);
@@ -131,7 +134,13 @@ Game_Actor.prototype.performAttack = function() {
       this.startWeaponAnimation(1);
 	}
 };
- 
+
+gepa = Game_Enemy.prototype.performAttack;
+Game_Enemy.prototype.performAttack = function() {
+Rexal.SWE.processBattlerNoteTag($dataEnemies[this.enemyId()],this);
+ if(gepa)gepa.call(this);
+
+ }
   //-----------------------------------------------------------------------------
 // Sprite_Actor
 //=============================================================================
@@ -236,6 +245,28 @@ Sprite_Weapon.prototype.updatePatternRex = function() {
   //-----------------------------------------------------------------------------
 // Rex Functions - New Stuff
 //=============================================================================
+Rexal.SWE.processBattlerNoteTag = function(obj,obj2) {
+
+if(!obj || !obj.note)return;
+
+		var notedata = obj.note.split(/[\r\n]+/);
+
+		for (var i = 0; i < notedata.length; i++) {
+		var line = notedata[i].toLowerCase();
+		var lines = line.split(': ');
+		
+		switch (lines[0]) {
+		case 'weapon index' :
+		if(!obj2._equips)obj2._equips = [];
+		obj2._equips[0] = new Game_Item();
+		obj2._equips[0].setObject($dataWeapons[parseInt(lines[1])]);
+		break;
+		
+		}
+		
+}
+
+};
 
 
 Rexal.SWE.processWeaponNoteTag = function(obj) {
