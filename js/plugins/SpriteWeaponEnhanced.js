@@ -8,7 +8,7 @@ Imported.SpriteWeaponEnhanced = true;
 var Rexal = Rexal || {};
 Rexal.SWE = Rexal.SWE || {};
 /*:
- * @plugindesc v1.14a - ReTooled:
+ * @plugindesc v1.14b - ReTooled:
  * Makes the Weapon's battle image much more customizable.
  * @author Rexal
  *
